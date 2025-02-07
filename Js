@@ -1,0 +1,55 @@
+// Form Validation Function
+function validateForm(event) {
+    event.preventDefault(); // Prevent the form from submitting
+  
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const age = document.getElementById('age').value;
+    const errorMessages = document.getElementById('errorMessages');
+    let errors = [];
+  
+    // Clear any previous error messages
+    errorMessages.innerHTML = '';
+  
+    // Validate Name (only letters and spaces allowed)
+    const namePattern = /^[A-Za-z\s]+$/;
+    if (!namePattern.test(name)) {
+      errors.push('Name must contain only letters and spaces. Please re-enter your name.');
+    }
+  
+    // Validate Email
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(email)) {
+      errors.push('Please enter a valid email address.');
+    }
+  
+    // Validate Password
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordPattern.test(password)) {
+      errors.push('Password must be at least 8 characters long, contain 1 uppercase letter, 1 lowercase letter, and 1 number.');
+    }
+  
+    // Verify Passwords Match
+    if (password !== confirmPassword) {
+      errors.push('Passwords do not match.');
+    }
+  
+    // Validate Age
+    if (age < 18 || age > 100) {
+      errors.push('Age must be between 18 and 100.');
+    }
+  
+    // If there are errors, display them, else show success
+    if (errors.length > 0) {
+      errorMessages.innerHTML = errors.join('<br>');
+    } else {
+      alert('Registration Successful!');
+      document.getElementById('registrationForm').reset(); // Reset form
+    }
+  }
+  
+  // Add event listener to the form
+  document.getElementById('registrationForm').addEventListener('submit', validateForm);
+  
